@@ -1639,8 +1639,8 @@ test('parts: the RPC sets and clears parentId, and the agent tools take parent a
   const made = await call('create_project', { title: 'Android', parent: 'threadbear', join: false });
   assert.match(made.text, /Made the project "Android" \(p_[0-9a-f]+\), a part of "Threadbear"\./);
   const list = (await call('list_projects', {})).text.split('\n');
-  const at = list.findIndex((l) => l.includes('"Threadbear"'));
-  assert.ok(list[at + 1].startsWith('  ') && list.slice(at + 1, at + 3).some((l) => l.includes('"GPUI"')), 'parts under their parent, indented:\n' + list.join('\n'));
+  const at = list.findIndex((l: string) => l.includes('"Threadbear"'));
+  assert.ok(list[at + 1].startsWith('  ') && list.slice(at + 1, at + 3).some((l: string) => l.includes('"GPUI"')), 'parts under their parent, indented:\n' + list.join('\n'));
   assert.match((await call('read_project', { project: 'GPUI' })).text, /\nPart of: Threadbear \(p_[0-9a-f]+\)\n/);
   assert.match((await call('read_project', { project: 'Threadbear' })).text, /\nParts: .*GPUI \(p_[0-9a-f]+\)/);
   assert.match((await call('update_project', { project: 'GPUI', parent: '' })).text, /^Updated "GPUI"/);
